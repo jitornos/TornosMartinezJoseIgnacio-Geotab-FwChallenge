@@ -1,0 +1,58 @@
+ENCODER AND DECODER FOR GSM 03.38 (7 BITS CODING)
+
+Specification
+================
+
+Digital cellular telecommunications system (Phase 2+);
+Alphabets and language-specific information
+(GSM 03.38)
+
+Comments
+===========
+
+Strings are avoided allowing to use null characters (take into account that null character is translated to '@' in the alphabet).
+
+Encoded messages are not supposed to end with null character/'@' to allow them to have any number of bytes.
+
+Extra numerical test encoded sequences has been added to check the behavior with different number of bytes. 
+
+Makefile is optimizing the generated product for size and resources.
+
+Compilation
+==============
+
+Just execute:
+$ make
+gcc -Wall -g -I"./include"  -Os   -c -o src/main.o src/main.c
+gcc -Wall -g -I"./include"  -Os -o gsm_03.28 src/main.o 
+mv gsm_03.28 gsm_03.28.sym
+strip --strip-debug gsm_03.28.sym -o gsm_03.28
+20973667 12 -rwxr-xr-x 1 joseignacio joseignacio 9744 Mar 15 16:12 gsm_03.28
+20972047 20 -rwxr-xr-x 1 joseignacio joseignacio 16816 Mar 15 16:12 gsm_03.28.sym
+
+Two products will be generated:
+- gsm_03.28: pure binary
+- gsm_03.28.sym: binary with symbols
+
+Results
+==========
+
+In ordert to check the behavior of prerecorded test encoded sequences, execute:
+$ ./gsm_03.28
+Decoded = '1'
+Decoded = '12'
+Decoded = '123'
+Decoded = '1234'
+Decoded = '12345'
+Decoded = '123456'
+Decoded = '1234567'
+Decoded = '123456781'
+Decoded = '1234567812'
+Decoded = 'Hello
+world'
+Decoded = 'The price is 10$'
+Decoded = 'This GTS defines the language-specific requirements for GSM within the digital cellulartelecommunications system (Phase 2/Phase 2+).'
+Decoded = 'Send an email to info@intendia.com'
+
+If the test sequences are processed and no error is shown, everything is ok.
+- 
